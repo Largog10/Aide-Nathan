@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private SwitchState currentSwitchState = SwitchState.None; // Déclaration de la variable 'currentSwitchState'.
 
-    //Coche là avant le démarage du jeux pour pouvoir choisir le gameplay à tester, tu dois donc choisir dans l'enum avant le démarage la fonction souhaiter.
+    //Choisi true ou false là avant le démarage du jeux pour pouvoir choisir le gameplay à tester, tu dois donc choisir dans l'enum avant le démarage la fonction souhaiter.
+    //Ne change pas le mod en realtime
     //La variable se trouve en public donc n'ésite pas à l'utiliser autres par, c'est comme speed pour l'avoir à distance.
-    public static bool DevMode;
+    [SerializeField]
+    public static bool DevMode = true;
 
     public static float speed = 5.0f; // La variable 'speed' accessible depuis les autres scripts.
 
@@ -27,11 +29,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Changer de script quand F12 est pressé.
-        if (Input.GetKeyDown(KeyCode.F12) || DevMode == true)
+        if (Input.GetKeyDown(KeyCode.F12))
         {
             currentSwitchState = (SwitchState)(((int)currentSwitchState + 1) % 3);
 
-            switch (currentSwitchState){
+            switch (currentSwitchState)
+            {
                 case SwitchState.ScriptOne:
                     Debug.Log("Script One activé !");
                     ScriptOne.DisplayMessage();
@@ -45,7 +48,31 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        //Gestion du devmode
+        //Pas trés bien implémenter, mais tu devras le ritirer quand tu auras un bon code
+        else if (DevMode == true)
+        {
+            currentSwitchState = (SwitchState)(int)currentSwitchState;
+
+            switch (currentSwitchState)
+            {
+                case SwitchState.ScriptOne:
+                    Debug.Log("Script One activé !");
+                    ScriptOne.DisplayMessage();
+                    break;
+                case SwitchState.ScriptTwo:
+                    Debug.Log("Script Two activé !");
+                    ScriptTwo.DisplayMessage();
+                    break;
+                case SwitchState.None:
+                    Debug.Log("Aucun script activé.");
+                    break;
+            }
+            //Pasage du DevMode à false pour ne pas faire des boucles
+            DevMode = false;
+        }
     }
+
     public void InitGame()
     {
         //écrit ici inisialisation aprés le changement du script connecté

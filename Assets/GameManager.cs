@@ -33,8 +33,7 @@ public class GameManager : MonoBehaviour
         {
             currentSwitchState = (SwitchState)(((int)currentSwitchState + 1) % 3);
 
-            switch (currentSwitchState)
-            {
+            switch (currentSwitchState){
                 case SwitchState.ScriptOne:
                     Debug.Log("Script One activé !");
                     ScriptOne.DisplayMessage();
@@ -54,8 +53,7 @@ public class GameManager : MonoBehaviour
         {
             currentSwitchState = (SwitchState)(int)currentSwitchState;
 
-            switch (currentSwitchState)
-            {
+            switch (currentSwitchState){
                 case SwitchState.ScriptOne:
                     Debug.Log("Script One activé !");
                     ScriptOne.DisplayMessage();
